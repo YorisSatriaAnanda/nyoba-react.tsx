@@ -16,7 +16,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
-  // Dramatic liquid curve paths
+  // Snellenberg-style liquid paths
   const initialPath = `
     M0 300 
     Q${dimensions.width / 2} 0 ${dimensions.width} 300 
@@ -38,7 +38,7 @@ const CurveTransition = ({ text }: { text: string }) => {
       top: "0",
     },
     enter: {
-      top: "-200vh",
+      top: "-150vh", // Adjusted for better exit timing
       transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: {
@@ -61,58 +61,68 @@ const CurveTransition = ({ text }: { text: string }) => {
     }
   };
 
+  // Improved Snellenberg-style staggered character reveal
   const textContainerVariants: Variants = {
     initial: { opacity: 0 },
     enter: { 
       opacity: 0,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.1 }
     },
     exit: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.05,
-        delayChildren: 0.2
+        staggerChildren: 0.03,
+        delayChildren: 0.1
       }
     }
   };
 
   const charVariants: Variants = {
-    initial: { y: 100, opacity: 0 },
+    initial: { y: "150%", opacity: 0 },
     exit: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any }
+      transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] as any }
     }
   };
 
   return (
-    <motion.div
-      variants={curveVariants}
-      initial="initial"
-      animate="enter"
-      exit="exit"
-      className="fixed left-0 w-full h-[calc(100vh+600px)] pointer-events-none z-[30000] bg-dark-900 flex items-center justify-center"
-      style={{ top: 0 }}
-    >
-      <motion.div 
-        variants={textContainerVariants}
-        className="flex overflow-hidden absolute z-10"
+    <div className="fixed inset-0 pointer-events-none z-[30000]">
+      {/* Background Curtain */}
+      <motion.div
+        variants={curveVariants}
+        initial="initial"
+        animate="enter"
+        exit="exit"
+        className="absolute left-0 w-full h-[calc(100vh+600px)] bg-dark-900"
       >
-        {text.split('').map((char, i) => (
-          <motion.span
-            key={i}
-            variants={charVariants}
-            className="text-text-light text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter inline-block"
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </motion.span>
-        ))}
+        <svg className="absolute top-[-300px] w-full h-[300px] fill-dark-900">
+          <motion.path variants={pathVariants} />
+        </svg>
       </motion.div>
-      
-      <svg className="absolute top-[-300px] w-full h-[300px] fill-dark-900">
-        <motion.path variants={pathVariants} />
-      </svg>
-    </motion.div>
+
+      {/* Centered Text Overlay - Stays fixed in viewport center */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+        <motion.div 
+          variants={textContainerVariants}
+          initial="initial"
+          animate="enter"
+          exit="exit"
+          className="flex flex-wrap justify-center px-10"
+        >
+          {text.split('').map((char, i) => (
+            <div key={i} className="overflow-hidden h-[1.2em] flex items-center">
+              <motion.span
+                variants={charVariants}
+                className="text-text-light text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
   );
 };
 
