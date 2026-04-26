@@ -111,10 +111,10 @@ const CurveTransition = ({ text }: { text: string }) => {
           className="flex flex-wrap justify-center px-10"
         >
           {text.split('').map((char, i) => (
-            <div key={i} className="overflow-hidden h-[1.2em] flex items-center">
+            <div key={i} className="overflow-hidden flex items-center h-fit">
               <motion.span
                 variants={charVariants}
-                className="text-text-light text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter inline-block"
+                className="text-text-light text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none"
               >
                 {char === ' ' ? '\u00A0' : char}
               </motion.span>
