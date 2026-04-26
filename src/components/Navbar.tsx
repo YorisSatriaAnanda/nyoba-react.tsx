@@ -46,11 +46,7 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHome]);
 
-  const handleContactClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onContactClick();
-    setIsOpen(false);
-  };
+
 
   return (
     <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled || !isHome ? 'bg-dark-900/90 backdrop-blur-md py-4 shadow-lg shadow-dark-800' : 'bg-transparent py-6'}`}>

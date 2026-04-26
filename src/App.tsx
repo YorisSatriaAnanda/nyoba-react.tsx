@@ -13,17 +13,21 @@ import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import ContactForm from './components/ContactForm';
 import ScrollToTop from './components/ScrollToTop';
+import CurveTransition from './components/CurveTransition';
 
-const PageTransition = ({ children }: { children: React.ReactNode }) => {
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
+    <>
+      <CurveTransition />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        {children}
+      </motion.div>
+    </>
   );
 };
 
@@ -34,21 +38,21 @@ const AnimatedRoutes = ({ onContactClick }: { onContactClick: () => void }) => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={
-          <PageTransition>
+          <PageWrapper>
             <Hero onContactClick={onContactClick} />
             <About />
             <Skills />
-          </PageTransition>
+          </PageWrapper>
         } />
         <Route path="/projects" element={
-          <PageTransition>
+          <PageWrapper>
             <div className="pt-20"><Projects /></div>
-          </PageTransition>
+          </PageWrapper>
         } />
         <Route path="/certificates" element={
-          <PageTransition>
+          <PageWrapper>
             <div className="pt-20"><Certificates /></div>
-          </PageTransition>
+          </PageWrapper>
         } />
       </Routes>
     </AnimatePresence>
