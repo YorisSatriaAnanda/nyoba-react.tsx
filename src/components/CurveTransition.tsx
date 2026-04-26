@@ -16,7 +16,6 @@ const CurveTransition = ({ text }: { text: string }) => {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
-  // Snellenberg-style liquid paths
   const initialPath = `
     M0 300 
     Q${dimensions.width / 2} 0 ${dimensions.width} 300 
@@ -39,7 +38,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       top: "-150vh", 
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 },
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 },
       transitionEnd: { top: "-200vh" }
     },
     exit: {
@@ -54,7 +53,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       d: targetPath,
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: {
       d: initialPath,
@@ -62,43 +61,25 @@ const CurveTransition = ({ text }: { text: string }) => {
     }
   };
 
-  const textContainerVariants: Variants = {
+  const textVariants: Variants = {
     initial: { 
       opacity: 1,
-      transition: { staggerChildren: 0.03 } 
+      y: 0
     },
     enter: { 
       opacity: 0,
-      y: -100,
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
+      y: -150,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: { 
       opacity: 1,
-      transition: { 
-        staggerChildren: 0.03,
-        delayChildren: 0.1
-      }
+      y: 0,
+      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any, delay: 0.35 }
     }
-  };
-
-  const charVariants: Variants = {
-    initial: { y: 0, opacity: 1 },
-    enter: { 
-      y: -50,
-      opacity: 0,
-      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any }
-    },
-    exit: { 
-      y: 0, 
-      opacity: 1,
-      transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] as any, delay: 0.2 }
-    },
-    hidden: { y: "150%", opacity: 0 }
   };
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[30000]">
-      {/* Background Curtain */}
       <motion.div
         variants={curveVariants}
         initial="initial"
@@ -111,27 +92,17 @@ const CurveTransition = ({ text }: { text: string }) => {
         </svg>
       </motion.div>
 
-      {/* Centered Text Overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <motion.div 
-          variants={textContainerVariants}
+          variants={textVariants}
           initial="initial"
           animate="enter"
           exit="exit"
           className="flex flex-wrap justify-center px-10"
         >
-          {text.split('').map((char, i) => (
-            <div key={i} className="overflow-hidden flex items-center h-fit">
-              <motion.span
-                variants={charVariants}
-                initial="hidden"
-                animate={undefined} // Controlled by parent
-                className="text-text-light text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none"
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            </div>
-          ))}
+          <span className="text-text-light text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none">
+            {text}
+          </span>
         </motion.div>
       </div>
     </div>
