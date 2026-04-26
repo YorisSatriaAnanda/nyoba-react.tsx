@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import GlowButton from './GlowButton';
 
 const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,12 +89,12 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
             </a>
           </div>
           
-          <button 
+          <GlowButton 
             onClick={onContactClick}
             className="bg-brand-light hover:bg-white hover:text-brand-maroon text-text-light px-8 py-3 rounded-full font-bold uppercase tracking-[0.2em] transition-all shadow-xl shadow-brand-light/20 active:scale-95 text-xs"
           >
             Hire Me
-          </button>
+          </GlowButton>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -124,12 +125,12 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
           <a href="/resume.pdf" download className="text-xl font-bold text-text-light flex items-center gap-2 uppercase tracking-tighter">
             <Download size={20} /> CV Resume
           </a>
-          <button 
-            onClick={handleContactClick} 
+          <GlowButton 
+            onClick={onContactClick} 
             className="w-4/5 bg-brand-light text-text-light py-5 rounded-2xl font-bold uppercase tracking-[0.2em] transition-all active:scale-95 text-sm"
           >
             Hire Me
-          </button>
+          </GlowButton>
         </motion.div>
       )}
     </nav>

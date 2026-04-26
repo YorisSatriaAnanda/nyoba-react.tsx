@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, CheckCircle2 } from 'lucide-react';
+import GlowButton from './GlowButton';
 
 const ContactForm = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   const [isSent, setIsSent] = useState(false);
@@ -82,12 +83,12 @@ const ContactForm = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
                       />
                     </div>
 
-                    <button 
+                    <GlowButton 
                       type="submit"
                       className="w-full bg-brand-light hover:bg-brand-maroon text-text-light py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-brand-light/10 mt-auto"
                     >
                       SEND MESSAGE <Send size={24} />
-                    </button>
+                    </GlowButton>
                   </motion.form>
                 ) : (
                   <motion.div 
@@ -115,7 +116,7 @@ const ContactForm = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
 
             <div className="mt-12 pt-12 border-t border-text-muted/10 flex flex-col gap-4 text-center">
               <p className="text-text-muted text-sm">Or reach out directly at</p>
-              <a href="mailto:hello@pongo.dev" className="text-2xl font-bold text-text-light hover:text-brand-light transition-colors">hello@pongo.dev</a>
+              <a href="mailto:hello@yoris.dev" className="text-2xl font-bold text-text-light hover:text-brand-light transition-colors">hello@yoris.dev</a>
             </div>
           </motion.div>
         </div>

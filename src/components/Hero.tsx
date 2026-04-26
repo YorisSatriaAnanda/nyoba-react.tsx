@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import { ArrowRight, Code, Download, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import GlowButton from './GlowButton';
 
 const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
   const { scrollY } = useScroll();
@@ -82,23 +83,24 @@ const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
               transition={{ duration: 0.5, delay: 1 }}
               className="flex flex-col sm:flex-row gap-4 items-center"
             >
-              <Link to="/projects" className="group flex items-center gap-2 bg-text-light text-dark-900 px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105">
+              <GlowButton as={Link} to="/projects" className="group flex items-center gap-2 bg-text-light text-dark-900 px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105">
                 View My Work
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a 
+              </GlowButton>
+              <GlowButton 
+                as="a"
                 href="/resume.pdf" 
                 download
                 className="flex items-center gap-2 border border-text-muted hover:border-brand-light text-text-light px-8 py-4 rounded-full font-bold text-lg transition-all hover:bg-brand-light/10"
               >
                 <Download size={20} /> CV
-              </a>
-              <button 
+              </GlowButton>
+              <GlowButton 
                 onClick={onContactClick}
                 className="flex items-center gap-2 bg-brand-light hover:bg-brand-maroon text-text-light px-8 py-4 rounded-full font-bold text-lg transition-all active:scale-95 shadow-xl shadow-brand-light/20"
               >
                 Hire Me
-              </button>
+              </GlowButton>
             </motion.div>
 
             <motion.div 

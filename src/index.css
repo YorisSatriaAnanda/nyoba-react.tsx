@@ -69,3 +69,26 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #800000; 
 }
+
+.glow-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  inset: -100px;
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    rgba(168, 50, 50, 0.4) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.glow-button:hover::before {
+  opacity: 1;
+}
