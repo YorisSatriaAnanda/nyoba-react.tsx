@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
-import { ArrowRight, Code, Terminal, User } from 'lucide-react';
+import { ArrowRight, Code, Download, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
   const { scrollY } = useScroll();
@@ -81,15 +82,22 @@ const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
               transition={{ duration: 0.5, delay: 1 }}
               className="flex flex-col sm:flex-row gap-4 items-center"
             >
-              <a href="#projects" className="group flex items-center gap-2 bg-text-light text-dark-900 px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105">
+              <Link to="/projects" className="group flex items-center gap-2 bg-text-light text-dark-900 px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105">
                 View My Work
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a 
+                href="/resume.pdf" 
+                download
+                className="flex items-center gap-2 border border-text-muted hover:border-brand-light text-text-light px-8 py-4 rounded-full font-bold text-lg transition-all hover:bg-brand-light/10"
+              >
+                <Download size={20} /> CV
               </a>
               <button 
                 onClick={onContactClick}
-                className="flex items-center gap-2 border border-text-muted hover:border-brand-light text-text-light px-8 py-4 rounded-full font-bold text-lg transition-all hover:bg-brand-light/10"
+                className="flex items-center gap-2 bg-brand-light hover:bg-brand-maroon text-text-light px-8 py-4 rounded-full font-bold text-lg transition-all active:scale-95 shadow-xl shadow-brand-light/20"
               >
-                Contact Me
+                Hire Me
               </button>
             </motion.div>
 
@@ -97,11 +105,14 @@ const Hero = ({ onContactClick }: { onContactClick: () => void }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.2 }}
-              className="flex gap-6 mt-16 text-text-muted"
+              className="flex gap-8 mt-16 text-text-muted"
             >
-              <a href="#" className="hover:text-text-light transition-colors"><Code size={24} /></a>
-              <a href="#" className="hover:text-text-light transition-colors"><User size={24} /></a>
-              <a href="#" className="hover:text-text-light transition-colors"><Terminal size={24} /></a>
+              <a href="https://github.com/YorisSatriaAnanda" target="_blank" className="hover:text-text-light transition-colors flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+                <Code size={20} /> GitHub
+              </a>
+              <a href="https://linkedin.com/in/YorisSatriaAnanda" target="_blank" className="hover:text-text-light transition-colors flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+                <Globe size={20} /> LinkedIn
+              </a>
             </motion.div>
           </div>
         </motion.div>

@@ -43,15 +43,16 @@ const Footer = () => {
           <div>
             <h4 className="text-text-light font-bold mb-4 uppercase text-sm tracking-wider">Social</h4>
             <div className="flex flex-col gap-2">
-              {['LinkedIn', 'GitHub', 'Twitter', 'Instagram'].map(item => (
-                <a key={item} href="#" className="text-text-muted hover:text-brand-light transition-colors w-fit">{item}</a>
-              ))}
+              <a href="https://linkedin.com/in/YorisSatriaAnanda" target="_blank" className="text-text-muted hover:text-brand-light transition-colors w-fit">LinkedIn</a>
+              <a href="https://github.com/YorisSatriaAnanda" target="_blank" className="text-text-muted hover:text-brand-light transition-colors w-fit">GitHub</a>
+              <a href="#" className="text-text-muted hover:text-brand-light transition-colors w-fit">Twitter</a>
+              <a href="#" className="text-text-muted hover:text-brand-light transition-colors w-fit">Instagram</a>
             </div>
           </div>
           <div>
             <h4 className="text-text-light font-bold mb-4 uppercase text-sm tracking-wider">Contact</h4>
             <div className="flex flex-col gap-2">
-              <a href="mailto:hello@pongo.dev" className="text-text-muted hover:text-brand-light transition-colors">hello@pongo.dev</a>
+              <a href="mailto:hello@yoris.dev" className="text-text-muted hover:text-brand-light transition-colors">hello@yoris.dev</a>
               <a href="#" className="text-text-muted hover:text-brand-light transition-colors">+62 812 3456 789</a>
             </div>
           </div>
@@ -59,7 +60,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-text-muted/10 gap-4">
           <p className="text-text-muted text-sm">
-            © {new Date().getFullYear()} Pongo. Built with Passion.
+            © {new Date().getFullYear()} Yoris Satria Ananda. Built with Passion.
           </p>
           <div className="flex gap-8 text-xs text-text-muted uppercase tracking-widest font-bold">
             <a href="#" className="hover:text-text-light transition-colors">Privacy</a>

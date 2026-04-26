@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -11,6 +12,15 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import ContactForm from './components/ContactForm';
+import ScrollToTop from './components/ScrollToTop';
+
+const Home = ({ onContactClick }: { onContactClick: () => void }) => (
+  <>
+    <Hero onContactClick={onContactClick} />
+    <About />
+    <Skills />
+  </>
+);
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,28 +52,31 @@ function App() {
   }, [isLoading]);
 
   return (
-    <div className="min-h-screen bg-dark-900 text-text-main selection:bg-brand-maroon selection:text-text-light font-sans relative">
-      <AnimatePresence>
-        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen bg-dark-900 text-text-main selection:bg-brand-maroon selection:text-text-light font-sans relative">
+        <AnimatePresence>
+          {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+        </AnimatePresence>
 
-      <div className="grain-overlay" />
-      <CustomCursor />
-      
-      <Navbar onContactClick={() => setIsContactOpen(true)} />
-      
-      <main>
-        <Hero onContactClick={() => setIsContactOpen(true)} />
-        <About />
-        <Skills />
-        <Certificates />
-        <Projects />
-      </main>
+        <div className="grain-overlay" />
+        <CustomCursor />
+        
+        <Navbar onContactClick={() => setIsContactOpen(true)} />
+        
+        <main>
+          <Routes>
+            <Route path="/" element={<Home onContactClick={() => setIsContactOpen(true)} />} />
+            <Route path="/projects" element={<div className="pt-20"><Projects /></div>} />
+            <Route path="/certificates" element={<div className="pt-20"><Certificates /></div>} />
+          </Routes>
+        </main>
 
-      <Footer />
-      
-      <ContactForm isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
-    </div>
+        <Footer />
+        
+        <ContactForm isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      </div>
+    </Router>
   );
 }
 
