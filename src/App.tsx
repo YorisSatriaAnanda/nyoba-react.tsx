@@ -15,10 +15,10 @@ import ContactForm from './components/ContactForm';
 import ScrollToTop from './components/ScrollToTop';
 import CurveTransition from './components/CurveTransition';
 
-const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+const PageWrapper = ({ children, title }: { children: React.ReactNode, title: string }) => {
   return (
     <>
-      <CurveTransition />
+      <CurveTransition text={title} />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -38,19 +38,19 @@ const AnimatedRoutes = ({ onContactClick }: { onContactClick: () => void }) => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={
-          <PageWrapper>
+          <PageWrapper title="Home">
             <Hero onContactClick={onContactClick} />
             <About />
             <Skills />
           </PageWrapper>
         } />
         <Route path="/projects" element={
-          <PageWrapper>
+          <PageWrapper title="Projects">
             <div className="pt-20"><Projects /></div>
           </PageWrapper>
         } />
         <Route path="/certificates" element={
-          <PageWrapper>
+          <PageWrapper title="Certificates">
             <div className="pt-20"><Certificates /></div>
           </PageWrapper>
         } />
