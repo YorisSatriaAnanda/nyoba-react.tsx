@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Code, X } from 'lucide-react';
 import { useState } from 'react';
+import ImageLoader from './ImageLoader';
 
 const projects = [
   {
@@ -77,10 +78,10 @@ const Projects = () => {
               className="group relative bg-dark-800 rounded-3xl overflow-hidden border border-text-muted/10 cursor-pointer hover:border-brand-light/30 transition-all duration-500"
             >
               <div className="aspect-[4/3] overflow-hidden">
-                <img 
+                <ImageLoader 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  className="w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-brand-maroon/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <span className="bg-text-light text-dark-900 px-6 py-2 rounded-full font-bold text-sm tracking-wider">
@@ -135,7 +136,7 @@ const Projects = () => {
 
               <div className="flex flex-col md:flex-row h-full">
                 <div className="w-full md:w-1/2">
-                  <img src={selectedProject.image} className="w-full h-full object-cover min-h-[300px]" alt="" />
+                  <ImageLoader src={selectedProject.image} alt={selectedProject.title} className="w-full h-full min-h-[300px]" />
                 </div>
                 <div className="w-full md:w-1/2 p-10 md:p-12">
                   <span className="text-brand-light font-bold uppercase tracking-[0.2em] text-xs mb-4 block">Project Detail</span>

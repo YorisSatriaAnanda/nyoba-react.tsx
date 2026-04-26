@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,13 +14,46 @@ import Preloader from './components/Preloader';
 import ContactForm from './components/ContactForm';
 import ScrollToTop from './components/ScrollToTop';
 
-const Home = ({ onContactClick }: { onContactClick: () => void }) => (
-  <>
-    <Hero onContactClick={onContactClick} />
-    <About />
-    <Skills />
-  </>
-);
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const AnimatedRoutes = ({ onContactClick }: { onContactClick: () => void }) => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={
+          <PageTransition>
+            <Hero onContactClick={onContactClick} />
+            <About />
+            <Skills />
+          </PageTransition>
+        } />
+        <Route path="/projects" element={
+          <PageTransition>
+            <div className="pt-20"><Projects /></div>
+          </PageTransition>
+        } />
+        <Route path="/certificates" element={
+          <PageTransition>
+            <div className="pt-20"><Certificates /></div>
+          </PageTransition>
+        } />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,11 +98,7 @@ function App() {
         <Navbar onContactClick={() => setIsContactOpen(true)} />
         
         <main>
-          <Routes>
-            <Route path="/" element={<Home onContactClick={() => setIsContactOpen(true)} />} />
-            <Route path="/projects" element={<div className="pt-20"><Projects /></div>} />
-            <Route path="/certificates" element={<div className="pt-20"><Certificates /></div>} />
-          </Routes>
+          <AnimatedRoutes onContactClick={() => setIsContactOpen(true)} />
         </main>
 
         <Footer />
