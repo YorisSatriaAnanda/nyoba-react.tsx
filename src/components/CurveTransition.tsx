@@ -39,8 +39,8 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       top: "-150vh", 
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 },
-      transitionEnd: { top: "-200vh" } // Extra safety jump after animation
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 },
+      transitionEnd: { top: "-200vh" }
     },
     exit: {
       top: "0",
@@ -54,7 +54,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       d: targetPath,
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
     },
     exit: {
       d: initialPath,
@@ -63,10 +63,14 @@ const CurveTransition = ({ text }: { text: string }) => {
   };
 
   const textContainerVariants: Variants = {
-    initial: { opacity: 0 },
+    initial: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.03 } 
+    },
     enter: { 
       opacity: 0,
-      transition: { duration: 0.1 }
+      y: -100,
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
     },
     exit: { 
       opacity: 1,
@@ -78,12 +82,18 @@ const CurveTransition = ({ text }: { text: string }) => {
   };
 
   const charVariants: Variants = {
-    initial: { y: "150%", opacity: 0 },
+    initial: { y: 0, opacity: 1 },
+    enter: { 
+      y: -50,
+      opacity: 0,
+      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any }
+    },
     exit: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] as any }
-    }
+      transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] as any, delay: 0.2 }
+    },
+    hidden: { y: "150%", opacity: 0 }
   };
 
   return (
@@ -114,6 +124,8 @@ const CurveTransition = ({ text }: { text: string }) => {
             <div key={i} className="overflow-hidden flex items-center h-fit">
               <motion.span
                 variants={charVariants}
+                initial="hidden"
+                animate={undefined} // Controlled by parent
                 className="text-text-light text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none"
               >
                 {char === ' ' ? '\u00A0' : char}
