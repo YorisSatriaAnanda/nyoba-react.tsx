@@ -38,7 +38,7 @@ const CurveTransition = ({ text }: { text: string }) => {
       top: "0",
     },
     enter: {
-      top: "-150vh",
+      top: "-200vh",
       transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: {
