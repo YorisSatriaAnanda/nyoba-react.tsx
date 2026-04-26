@@ -16,19 +16,20 @@ const CurveTransition = ({ text }: { text: string }) => {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
+  // Dramatic liquid curve paths
   const initialPath = `
     M0 300 
     Q${dimensions.width / 2} 0 ${dimensions.width} 300 
-    L${dimensions.width} ${dimensions.height + 300} 
-    L0 ${dimensions.height + 300} 
+    L${dimensions.width} ${dimensions.height + 600} 
+    L0 ${dimensions.height + 600} 
     Z
   `;
 
   const targetPath = `
     M0 300 
     Q${dimensions.width / 2} 300 ${dimensions.width} 300 
-    L${dimensions.width} ${dimensions.height + 300} 
-    L0 ${dimensions.height + 300} 
+    L${dimensions.width} ${dimensions.height + 600} 
+    L0 ${dimensions.height + 600} 
     Z
   `;
 
@@ -38,7 +39,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       top: "-150vh",
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: {
       top: "0",
@@ -52,7 +53,7 @@ const CurveTransition = ({ text }: { text: string }) => {
     },
     enter: {
       d: targetPath,
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any, delay: 0.2 }
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
     },
     exit: {
       d: initialPath,
@@ -60,19 +61,27 @@ const CurveTransition = ({ text }: { text: string }) => {
     }
   };
 
-  const textVariants: Variants = {
-    initial: {
+  const textContainerVariants: Variants = {
+    initial: { opacity: 0 },
+    enter: { 
       opacity: 0,
+      transition: { duration: 0.2 }
     },
-    enter: {
-      opacity: 0,
-      top: "40%",
-      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] as any }
-    },
-    exit: {
+    exit: { 
       opacity: 1,
-      top: "50%",
-      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any, delay: 0.3 }
+      transition: { 
+        staggerChildren: 0.05,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const charVariants: Variants = {
+    initial: { y: 100, opacity: 0 },
+    exit: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as any }
     }
   };
 
@@ -82,15 +91,23 @@ const CurveTransition = ({ text }: { text: string }) => {
       initial="initial"
       animate="enter"
       exit="exit"
-      className="fixed left-0 w-full h-[calc(100vh+300px)] pointer-events-none z-[30000] bg-dark-900 flex items-center justify-center"
+      className="fixed left-0 w-full h-[calc(100vh+600px)] pointer-events-none z-[30000] bg-dark-900 flex items-center justify-center"
       style={{ top: 0 }}
     >
-      <motion.p 
-        variants={textVariants}
-        className="text-text-light text-5xl md:text-8xl font-black uppercase tracking-tighter absolute z-10"
+      <motion.div 
+        variants={textContainerVariants}
+        className="flex overflow-hidden absolute z-10"
       >
-        {text}
-      </motion.p>
+        {text.split('').map((char, i) => (
+          <motion.span
+            key={i}
+            variants={charVariants}
+            className="text-text-light text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter inline-block"
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </motion.span>
+        ))}
+      </motion.div>
       
       <svg className="absolute top-[-300px] w-full h-[300px] fill-dark-900">
         <motion.path variants={pathVariants} />

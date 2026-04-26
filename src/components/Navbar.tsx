@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import GlowButton from './GlowButton';
 
 const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
@@ -9,6 +9,7 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === '/';
 
   const navItems = [
@@ -46,23 +47,29 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHome]);
 
-
+  const handleNavClick = (path: string) => {
+    setIsOpen(false);
+    navigate(path);
+  };
 
   return (
     <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled || !isHome ? 'bg-dark-900/90 backdrop-blur-md py-4 shadow-lg shadow-dark-800' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-black tracking-tighter text-text-light">
+        <div 
+          onClick={() => navigate('/')} 
+          className="text-2xl font-black tracking-tighter text-text-light cursor-pointer"
+        >
           PORT<span className="text-brand-light">FOLIO</span>
-        </Link>
+        </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 items-center">
           <div className="flex gap-8">
             {navItems.map((item) => (
-              <Link 
+              <div 
                 key={item.id} 
-                to={item.path}
-                className={`transition-all duration-300 text-[10px] font-bold uppercase tracking-[0.3em] relative group ${
+                onClick={() => handleNavClick(item.path)}
+                className={`transition-all duration-300 text-[10px] font-bold uppercase tracking-[0.3em] relative group cursor-pointer ${
                   (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-muted hover:text-text-light'
                 }`}
               >
@@ -74,7 +81,7 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-              </Link>
+              </div>
             ))}
             <a 
               href="/resume.pdf" 
@@ -107,16 +114,15 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
           className="md:hidden absolute top-full left-0 w-full bg-dark-800 border-t border-text-muted/20 shadow-xl py-10 flex flex-col items-center gap-8"
         >
           {navItems.map((item) => (
-            <Link 
+            <div 
               key={item.id} 
-              to={item.path}
-              onClick={() => setIsOpen(false)} 
-              className={`text-xl font-black uppercase tracking-tighter transition-colors ${
+              onClick={() => handleNavClick(item.path)}
+              className={`text-xl font-black uppercase tracking-tighter transition-colors cursor-pointer ${
                 (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-main'
               }`}
             >
               {item.name}
-            </Link>
+            </div>
           ))}
           <a href="/resume.pdf" download className="text-xl font-bold text-text-light flex items-center gap-2 uppercase tracking-tighter">
             <Download size={20} /> CV Resume
