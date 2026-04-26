@@ -59,47 +59,41 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-8 items-center">
-          {navItems.map((item) => (
-            <Link 
-              key={item.id} 
-              to={item.path}
-              className={`transition-all duration-300 text-sm font-medium relative group ${
-                (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-muted hover:text-text-light'
-              }`}
-            >
-              {item.name}
-              {((isHome && activeSection === item.id) || location.pathname === item.path) && (
-                <motion.div 
-                  layoutId="activeNav"
-                  className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand-light"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </Link>
-          ))}
-          <button 
-            onClick={onContactClick}
-            className="text-text-muted hover:text-text-light transition-colors text-sm font-medium"
-          >
-            Contact
-          </button>
-          
-          <div className="flex items-center gap-4 ml-4">
+        <div className="hidden md:flex gap-10 items-center">
+          <div className="flex gap-8">
+            {navItems.map((item) => (
+              <Link 
+                key={item.id} 
+                to={item.path}
+                className={`transition-all duration-300 text-sm font-bold uppercase tracking-widest relative group ${
+                  (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-muted hover:text-text-light'
+                }`}
+              >
+                {item.name}
+                {((isHome && activeSection === item.id) || location.pathname === item.path) && (
+                  <motion.div 
+                    layoutId="activeNav"
+                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand-light"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            ))}
             <a 
               href="/resume.pdf" 
               download
-              className="flex items-center gap-2 text-text-light border border-text-muted/30 hover:border-brand-light px-5 py-2 rounded-full font-bold text-xs transition-all"
+              className="text-text-muted hover:text-brand-light transition-all text-sm font-bold uppercase tracking-widest flex items-center gap-2"
             >
-              <Download size={14} /> CV
+              CV <Download size={14} />
             </a>
-            <button 
-              onClick={onContactClick}
-              className="bg-brand-light hover:bg-white hover:text-brand-maroon text-text-light px-6 py-2.5 rounded-full font-bold transition-all shadow-lg hover:shadow-brand-light/30 active:scale-95 text-sm"
-            >
-              Hire Me
-            </button>
           </div>
+          
+          <button 
+            onClick={onContactClick}
+            className="bg-brand-light hover:bg-white hover:text-brand-maroon text-text-light px-8 py-3 rounded-full font-black uppercase tracking-tighter transition-all shadow-xl shadow-brand-light/20 active:scale-95 text-sm"
+          >
+            Hire Me
+          </button>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -113,24 +107,27 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 w-full bg-dark-800 border-t border-text-muted/20 shadow-xl py-8 flex flex-col items-center gap-6"
+          className="md:hidden absolute top-full left-0 w-full bg-dark-800 border-t border-text-muted/20 shadow-xl py-10 flex flex-col items-center gap-8"
         >
           {navItems.map((item) => (
             <Link 
               key={item.id} 
               to={item.path}
               onClick={() => setIsOpen(false)} 
-              className={`text-lg font-medium transition-colors ${
+              className={`text-xl font-black uppercase tracking-tighter transition-colors ${
                 (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-main'
               }`}
             >
               {item.name}
             </Link>
           ))}
-          <a href="/resume.pdf" download className="text-lg font-medium text-text-light flex items-center gap-2">
-            <Download size={20} /> Download CV
+          <a href="/resume.pdf" download className="text-xl font-bold text-text-light flex items-center gap-2 uppercase tracking-tighter">
+            <Download size={20} /> CV Resume
           </a>
-          <button onClick={handleContactClick} className="text-lg font-medium text-brand-light">
+          <button 
+            onClick={handleContactClick} 
+            className="w-4/5 bg-brand-light text-text-light py-5 rounded-2xl font-black uppercase tracking-tighter"
+          >
             Hire Me
           </button>
         </motion.div>
