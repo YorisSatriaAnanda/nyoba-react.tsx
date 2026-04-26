@@ -20,16 +20,16 @@ const CurveTransition = ({ text }: { text: string }) => {
   const initialPath = `
     M0 300 
     Q${dimensions.width / 2} 0 ${dimensions.width} 300 
-    L${dimensions.width} ${dimensions.height + 600} 
-    L0 ${dimensions.height + 600} 
+    L${dimensions.width} ${dimensions.height + 300} 
+    L0 ${dimensions.height + 300} 
     Z
   `;
 
   const targetPath = `
     M0 300 
     Q${dimensions.width / 2} 300 ${dimensions.width} 300 
-    L${dimensions.width} ${dimensions.height + 600} 
-    L0 ${dimensions.height + 600} 
+    L${dimensions.width} ${dimensions.height + 300} 
+    L0 ${dimensions.height + 300} 
     Z
   `;
 
@@ -38,8 +38,9 @@ const CurveTransition = ({ text }: { text: string }) => {
       top: "0",
     },
     enter: {
-      top: "-150vh", // Adjusted for better exit timing
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 }
+      top: "-150vh", 
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1] as any, delay: 0.3 },
+      transitionEnd: { top: "-200vh" } // Extra safety jump after animation
     },
     exit: {
       top: "0",
@@ -61,7 +62,6 @@ const CurveTransition = ({ text }: { text: string }) => {
     }
   };
 
-  // Improved Snellenberg-style staggered character reveal
   const textContainerVariants: Variants = {
     initial: { opacity: 0 },
     enter: { 
@@ -94,14 +94,14 @@ const CurveTransition = ({ text }: { text: string }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="absolute left-0 w-full h-[calc(100vh+600px)] bg-dark-900"
+        className="absolute left-0 w-full h-[calc(100vh+300px)] bg-dark-900"
       >
         <svg className="absolute top-[-300px] w-full h-[300px] fill-dark-900">
           <motion.path variants={pathVariants} />
         </svg>
       </motion.div>
 
-      {/* Centered Text Overlay - Stays fixed in viewport center */}
+      {/* Centered Text Overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
         <motion.div 
           variants={textContainerVariants}
