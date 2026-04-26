@@ -65,7 +65,7 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
               <Link 
                 key={item.id} 
                 to={item.path}
-                className={`transition-all duration-300 text-sm font-bold uppercase tracking-widest relative group ${
+                className={`transition-all duration-300 text-[10px] font-bold uppercase tracking-[0.3em] relative group ${
                   (isHome && activeSection === item.id) || location.pathname === item.path ? 'text-brand-light' : 'text-text-muted hover:text-text-light'
                 }`}
               >
@@ -82,15 +82,15 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
             <a 
               href="/resume.pdf" 
               download
-              className="text-text-muted hover:text-brand-light transition-all text-sm font-bold uppercase tracking-widest flex items-center gap-2"
+              className="text-text-muted hover:text-brand-light transition-all text-[10px] font-bold uppercase tracking-[0.3em] flex items-center gap-2"
             >
-              CV <Download size={14} />
+              CV <Download size={12} />
             </a>
           </div>
           
           <button 
             onClick={onContactClick}
-            className="bg-brand-light hover:bg-white hover:text-brand-maroon text-text-light px-8 py-3 rounded-full font-black uppercase tracking-tighter transition-all shadow-xl shadow-brand-light/20 active:scale-95 text-sm"
+            className="bg-brand-light hover:bg-white hover:text-brand-maroon text-text-light px-8 py-3 rounded-full font-bold uppercase tracking-[0.2em] transition-all shadow-xl shadow-brand-light/20 active:scale-95 text-xs"
           >
             Hire Me
           </button>
@@ -126,7 +126,7 @@ const Navbar = ({ onContactClick }: { onContactClick: () => void }) => {
           </a>
           <button 
             onClick={handleContactClick} 
-            className="w-4/5 bg-brand-light text-text-light py-5 rounded-2xl font-black uppercase tracking-tighter"
+            className="w-4/5 bg-brand-light text-text-light py-5 rounded-2xl font-bold uppercase tracking-[0.2em] transition-all active:scale-95 text-sm"
           >
             Hire Me
           </button>
